@@ -15,13 +15,19 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        \App\Models\Users::create([
+        $user = \App\Models\Users::create([
             "email" => "ravenekse@example.com",
             "password" => Hash::make("password"),
             "firstname" => "Adam",
             "surname" => "Tyryłło",
             "phone_number" => "+48123456789",
-            "departments" => json_encode(["1", "2"]),
         ]);
+
+        $department = \App\Models\Departments::create([
+            "name" => "Dział handlowy",
+            "description" => "Tutaj się sprzedaje dziurawe dętki"
+        ]);
+
+        $user->departments()->attach($department);
     }
 }
