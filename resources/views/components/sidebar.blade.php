@@ -1,11 +1,25 @@
-@php
-$user = auth()->user()
-@endphp
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <div class="sidebar">
 
-<div class="sidebar">
-    <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-        <div class="image">
-            <img src="{{ $user->image  }}" alt="">
-        </div>
+        <nav class="mt-2">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                @role('user')
+                <li class="nav-item active">
+                    <a href="{{ route("admin.departments") }}" class="nav-link">
+                        <i class="nav-icon ri-folder-user-line"></i>
+                        <p>Działy</p>
+                    </a>
+                </li>
+                @endrole
+                @role('admin')
+                <li class="nav-item active">
+                    <a href="{{ route("admin.departments") }}" class="nav-link">
+                        {{--                    <i class="nav-icon fas fa-th"></i>--}}
+                        <p>Widgets</p>
+                    </a>
+                </li>
+                @endrole
+            </ul>
+        </nav>
     </div>
-</div>
+</aside>

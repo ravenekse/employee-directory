@@ -9,11 +9,14 @@
                     <b>{{ config('app.name') }}</b> - Logowanie
                 </div>
                 <div class="card-body">
-                    @error('auth_error')
-                    <div class="alert alert-danger text-center">
-                        {{ $message }}
-                    </div>
-                    @enderror
+                    @if(session("NOTIFICATION"))
+                        @php
+                            $notification = (object) session("NOTIFICATION")
+                        @endphp
+                        <div class="alert alert-{{ $notification->type }} text-center">
+                            {{ $notification->message }}
+                        </div>
+                    @endif
                     <form action="{{ route("auth.login.form") }}" method="post">
                         @csrf
                         <div class="input-group mb-3">

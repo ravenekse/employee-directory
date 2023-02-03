@@ -31,10 +31,10 @@ class LoginController extends Controller
 
     /**
      * @param Request $request
-     * @return RedirectResponse|void
+     * @return RedirectResponse
      * @throws ValidationException
      */
-    public function form(Request $request)
+    public function form(Request $request): RedirectResponse
     {
         $validator = Validator::make($request->post(), [
             "email" => "required|email",
@@ -51,12 +51,13 @@ class LoginController extends Controller
         if (!auth()->attempt($validator->validated(), $request->boolean("remember_me"))) {
             return redirect()
                 ->back()
-                ->withErrors([
-                    "auth_error" => "Podano nieprawidłowy adres e-mail lub hasło",
+                ->with("NOTIFICATION", [
+                    "type" => "danger",
+                    "message" => "Podano nieprawidłowy adres e-mail lub hasło",
                 ])
                 ->onlyInput("email");
         }
 
-        return redirect()->route("admin.dashboard");
+        return redirect()->route("admin.departments");
     }
 }

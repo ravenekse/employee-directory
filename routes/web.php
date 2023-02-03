@@ -1,7 +1,9 @@
 <?php
 
-use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\Add\DepartmentController;
+use App\Http\Controllers\Admin\DepartmentsController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\LogoutController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,19 +19,36 @@ use Illuminate\Support\Facades\Route;
 
 Route::get("/", function () {
     return redirect()->route("auth.login.index");
+
+    //    $department = \App\Models\Departments::first();
+    //    foreach ($department->users as $user) {
+    //        echo "{$user->firstname} {$user->surname} <br>";
+    //    }
 });
 
-Route::prefix("auth")
-    ->middleware("guest")
-    ->group(function () {
-        Route::prefix("login")->group(function () {
+Route::prefix("auth")->group(function () {
+    Route::prefix("login")
+        ->group(function () {
             Route::get("/", [LoginController::class, "index"])->name("auth.login.index");
             Route::post("form", [LoginController::class, "form"])->name("auth.login.form");
-        });
-    });
+        })
+        ->middleware("guest");
+
+    Route::get("logout", [LogoutController::class, "logout"])->name("auth.logout");
+});
 
 Route::prefix("admin")
     ->middleware("auth")
     ->group(function () {
-        Route::get("dashboard", [DashboardController::class, "index"])->name("admin.dashboard");
+        Route::get("/", function () {
+            return redirect()->route("admin.departments");
+        })->name("admin.home");
+
+        Route::prefix("departments")->group(function () {
+            Route::get("/", [DepartmentsController::class, "index"])->name("admin.departments");
+
+            Route::prefix("add")->group(function () {
+                Route::get("/", [DepartmentController::class, "index"])->name("admin.add.department");
+            });
+        });
     });

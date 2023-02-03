@@ -12,23 +12,29 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('departments_users', function (Blueprint $table) {
-            $table->id();
-            $table->bigInteger('user_id')->unsigned();
-            $table->bigInteger('department_id')->unsigned();
+        Schema::create("departments_users", function (Blueprint $table) {
+            $table
+                ->bigInteger("user_id")
+                ->unsigned()
+                ->index();
+            $table
+                ->bigInteger("department_id")
+                ->unsigned()
+                ->index();
 
-            $table->foreign('user_id')
-                ->references('id')
-                ->on('users')
-                ->onDelete('cascade');
+            $table
+                ->foreign("user_id")
+                ->references("id")
+                ->on("users")
+                ->onDelete("cascade");
 
-            $table->foreign('department_id')
-                ->references('id')
-                ->on('departments')
-                ->onDelete('cascade');
+            $table
+                ->foreign("department_id")
+                ->references("id")
+                ->on("departments")
+                ->onDelete("cascade");
         });
     }
-
 
     /**
      * Reverse the migrations.
@@ -37,6 +43,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('departments_users');
+        Schema::dropIfExists("departments_users");
     }
 };
