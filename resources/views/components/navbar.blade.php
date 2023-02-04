@@ -1,5 +1,7 @@
 @php
     $user = auth()->user();
+
+    $avatar = $user->image_url ?: asset('assets/images/default_avatar.jpg')
 @endphp
 
 <nav class="main-header navbar navbar-expand navbar-dark">
@@ -15,7 +17,7 @@
         <li class="nav-item dropdown">
             <a class="user-panel d-flex align-items-center" data-toggle="dropdown" href="#">
                 <div class="image">
-                    <img class="rounded-circle" src="{{ $user->image ? $user->image : "https://i.pravatar.cc/150?img=54" }}" alt="{{ "{$user->firstname} {$user->surname}" }}">
+                    <img class="rounded-circle" src="{{ $avatar }}" alt="{{ "{$user->firstname} {$user->surname}" }}">
                 </div>
                 <div class="info">
                     <div class="d-flex text-white align-items-center">
@@ -27,7 +29,7 @@
             <div class="dropdown-menu dropdown-menu-md dropdown-menu-right">
                 <div class="user-panel d-flex align-items-center mb-3">
                     <div class="image">
-                        <img class="rounded-circle" src="{{ $user->image ? $user->image : "https://i.pravatar.cc/150?img=54" }}" alt="{{ "{$user->firstname} {$user->surname}" }}">
+                        <img class="rounded-circle" src="{{ $avatar }}" alt="{{ "{$user->firstname} {$user->surname}" }}">
                     </div>
                     <div class="info">
                         <div class="d-block">{{ "{$user->firstname} {$user->surname}" }}</div>

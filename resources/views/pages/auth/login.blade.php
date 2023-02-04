@@ -13,8 +13,12 @@
                         @php
                             $notification = (object) session("NOTIFICATION")
                         @endphp
-                        <div class="alert alert-{{ $notification->type }} text-center">
+                        <div class="alert alert-{{ $notification->type }} alert-dismissible fade show text-center" role="alert">
                             {{ $notification->message }}
+
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <i class="ri-close-line" aria-hidden="true"></i>
+                            </button>
                         </div>
                     @endif
                     <form action="{{ route("auth.login.form") }}" method="post">

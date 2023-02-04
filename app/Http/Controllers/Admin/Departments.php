@@ -3,17 +3,17 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Departments;
+use App\Models\Departments as DepartmentsModel;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 
-class DepartmentsController extends Controller
+class Departments extends Controller
 {
-    private Departments $departments;
+    private DepartmentsModel $departments;
 
-    public function __construct(Departments $departments)
+    public function __construct(DepartmentsModel $departments)
     {
         $this->departments = $departments;
     }
@@ -28,19 +28,14 @@ class DepartmentsController extends Controller
         if (
             auth()
                 ->user()
-                ->hasRole("user")
-        ) {
-            $pageData = [
-                "departments" => auth()->user()->departments,
-            ];
-        } elseif (
-            auth()
-                ->user()
                 ->hasRole("admin")
         ) {
-            $pageData = [
-                "departments" => $this->departments->all(),
-            ];
+            $pageData["departments"] = $this->departments->paginate(10);
+        } else {
+            $pageData["departments"] = auth()
+                ->user()
+                ->departments()
+                ->paginate(10);
         }
 
         return view("pages.admin.departments", $pageData);

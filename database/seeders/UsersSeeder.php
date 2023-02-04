@@ -31,7 +31,7 @@ class UsersSeeder extends Seeder
                 "surname" => "Json",
                 "phone_number" => "+48123456789",
             ])
-            ->assignRole("user");
+            ->assignRole("employee");
 
         $user2 = $this->users
             ->create([
@@ -41,7 +41,7 @@ class UsersSeeder extends Seeder
                 "surname" => "Kowalski",
                 "phone_number" => "+48123456789",
             ])
-            ->assignRole("user");
+            ->assignRole("employee");
 
         $user1->departments()->attach(1);
         $user2->departments()->attach(1);

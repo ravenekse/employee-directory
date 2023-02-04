@@ -1,7 +1,9 @@
 <?php
 
-use App\Http\Controllers\Admin\Add\DepartmentController;
-use App\Http\Controllers\Admin\DepartmentsController;
+use App\Http\Controllers\Admin\Add\AddDepartment;
+use App\Http\Controllers\Admin\Departments;
+use App\Http\Controllers\Admin\Remove\RemoveDepartment;
+use App\Http\Controllers\Admin\ShowEmployee;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use Illuminate\Support\Facades\Route;
@@ -45,10 +47,19 @@ Route::prefix("admin")
         })->name("admin.home");
 
         Route::prefix("departments")->group(function () {
-            Route::get("/", [DepartmentsController::class, "index"])->name("admin.departments");
+            Route::get("/", [Departments::class, "index"])->name("admin.departments");
 
-            Route::prefix("add")->group(function () {
-                Route::get("/", [DepartmentController::class, "index"])->name("admin.add.department");
-            });
+            Route::prefix("add")
+                ->middleware("is-admin")
+                ->group(function () {
+                    Route::get("/", [AddDepartment::class, "index"])->name("admin.departments.add");
+                    Route::post("form", [AddDepartment::class, "form"])->name("admin.departments.add.form");
+                });
+
+            Route::get("remove/{department_id}", [RemoveDepartment::class, "remove"])
+                ->name("admin.departments.remove")
+                ->middleware("is-admin");
         });
+
+        Route::get("employee/{employee_id}", [ShowEmployee::class, "employee"])->name("auth.show-employee");
     });

@@ -23,7 +23,7 @@ class RolesSeeder extends Seeder
     public function run(): void
     {
         $this->role::create([
-            "name" => "user",
+            "name" => "employee",
         ]);
 
         $this->role::create([
