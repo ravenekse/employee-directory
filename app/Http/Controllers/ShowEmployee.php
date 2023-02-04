@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Models\Users;
-use Illuminate\Http\Request;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 
 class ShowEmployee extends Controller
 {
@@ -15,12 +16,12 @@ class ShowEmployee extends Controller
         $this->users = $users;
     }
 
-    public function employee($employee_id)
+    /**
+     * @param $employee_id
+     * @return View|Factory|Application
+     */
+    public function employee($employee_id): View|Factory|Application
     {
-        if (!$employee_id) {
-            return abort(404);
-        }
-
         if (
             !($employee = $this->users
                 ->where("id", $employee_id)
@@ -30,6 +31,8 @@ class ShowEmployee extends Controller
             return abort(404);
         }
 
-        return dd($employee);
+        $pageData["employee"] = $employee;
+
+        return view("pages.show-employee", $pageData);
     }
 }

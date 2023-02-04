@@ -42,7 +42,7 @@
                         </div>
                     </div>
                 </div>
-                <a href="{{ route("admin.departments") }}" class="dropdown-item">
+                <a href="{{ route("account-settings") }}" class="dropdown-item">
                     <i class="ri-user-settings-line mr-2"></i>
                     Ustawienia konta
                 </a>

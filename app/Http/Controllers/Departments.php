@@ -1,13 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Models\Departments as DepartmentsModel;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
-use Illuminate\Http\Request;
 
 class Departments extends Controller
 {
@@ -38,6 +36,6 @@ class Departments extends Controller
                 ->paginate(10);
         }
 
-        return view("pages.admin.departments", $pageData);
+        return view("pages.departments", $pageData);
     }
 }

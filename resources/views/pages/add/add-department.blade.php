@@ -10,7 +10,8 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-sm-12 col-md-10 col-lg-8 mx-auto">
-                        <form action="{{ route("admin.departments.add.form") }}" method="post">
+                        <h6>Podstawowe informacje</h6>
+                        <form action="{{ route("departments.add.form") }}" method="post">
                             @csrf
                             <div class="input-group mb-3">
                                 <input type="text" class="form-control @error('department_name') is-invalid @enderror" name="department_name" value="{{ old('department_name') }}" placeholder="Nazwa działu">
@@ -20,9 +21,9 @@
                             </div>
 
                             <div class="input-group mb-3">
-                                <textarea class="form-control department-description @error('department_description') is-invalid @enderror" name="department_description" value="{{ old('email') }}" placeholder="Opis działu" rows="12"></textarea>
+                                <textarea class="form-control department-description @error('department_description') is-invalid @enderror" name="department_description" placeholder="Opis działu" rows="12">{{ old('department_description') }}</textarea>
                                 @error('department_description')
-                                <span class="error invalid-feedback">{{ $message }}</span>
+                                    <span class="error invalid-feedback">{{ $message }}</span>
                                 @enderror
                             </div>
 

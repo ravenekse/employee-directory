@@ -58,6 +58,6 @@ class LoginController extends Controller
                 ->onlyInput("email");
         }
 
-        return redirect()->route("admin.departments");
+        return redirect()->route("departments");
     }
 }

@@ -22,7 +22,7 @@ class IsAdmin
                 ->user()
                 ->hasRole("admin")
         ) {
-            return redirect()->route("admin.departments");
+            return redirect()->route("departments");
         }
 
         return $next($request);

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin\Add;
+namespace App\Http\Controllers\Add;
 
 use App\Http\Controllers\Controller;
 use App\Models\Departments;
@@ -26,7 +26,7 @@ class AddDepartment extends Controller
      */
     public function index(): Factory|View|Application
     {
-        return view("pages.admin.add.add_department");
+        return view("pages.add.add-department");
     }
 
     /**
@@ -56,7 +56,7 @@ class AddDepartment extends Controller
         ]);
 
         return redirect()
-            ->route("admin.departments")
+            ->route("departments")
             ->with("NOTIFICATION", [
                 "type" => "success",
                 "message" => "Pomyślnie dodano dział o nazwie {$form->department_name}",
