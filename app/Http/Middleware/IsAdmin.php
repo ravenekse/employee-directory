@@ -22,7 +22,12 @@ class IsAdmin
                 ->user()
                 ->hasRole("admin")
         ) {
-            return redirect()->route("departments");
+            return redirect()
+                ->route("departments")
+                ->with("NOTIFICATION", [
+                    "type" => "danger",
+                    "message" => "Nie posiadasz dostępu do tej funkcji!",
+                ]);
         }
 
         return $next($request);

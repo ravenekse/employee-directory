@@ -1,12 +1,12 @@
-@extends('layouts.acp-layout')
-@section('title', "Profil {$employee->firstname} {$employee->surname}")
+@extends("layouts.acp-layout")
+@section("title", "Profil {$employee->firstname} {$employee->surname}")
 
 @php
     $name = "{$employee->firstname} {$employee->surname}";
-    $avatar = $employee->image_url ?: asset('assets/images/default_avatar.jpg');
+    $avatar = $employee->image_url ?: asset("assets/images/default_avatar.jpg");
 @endphp
 
-@section('acp_content')
+@section("acp_content")
     <div class="container-fluid">
         <div class="content-header d-flex align-items-center">
             <h4>Profil pracownika</h4>
@@ -32,7 +32,7 @@
                             <strong>Rola:</strong>
 
                             <p class="m-0">
-                                {{ $employee->hasRole('admin') ? "Administrator" : "Pracownik" }}
+                                {{ $employee->hasRole("admin") ? "Administrator" : "Pracownik" }}
                             </p>
                         </div>
                         <hr>

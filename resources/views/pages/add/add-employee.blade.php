@@ -1,7 +1,7 @@
-@extends('layouts.acp-layout')
-@section('title', 'Dodawanie pracownika')
+@extends("layouts.acp-layout")
+@section("title", "Dodawanie pracownika")
 
-@section('acp_content')
+@section("acp_content")
     <div class="container-fluid">
         <div class="content-header d-flex align-items-center">
             <h4>Dodawanie pracownika</h4>
@@ -16,36 +16,36 @@
                                 <div class="col-sm-12 col-md-12 col-lg-6">
                                     <h6>Podstawowe informacje</h6>
                                     <div class="input-group mb-3">
-                                        <input type="text" class="form-control @error('firstname') is-invalid @enderror" name="firstname" value="{{ old('firstname') }}" placeholder="Imię">
-                                        @error('firstname')
-                                        <span class="error invalid-feedback">{{ $message }}</span>
+                                        <input type="text" class="form-control @error("firstname") is-invalid @enderror" name="firstname" value="{{ old("firstname") }}" placeholder="Imię">
+                                        @error("firstname")
+                                            <span class="error invalid-feedback">{{ $message }}</span>
                                         @enderror
                                     </div>
 
                                     <div class="input-group mb-3">
-                                        <input type="text" class="form-control @error('surname') is-invalid @enderror" name="surname" value="{{ old('surname') }}" placeholder="Nazwisko">
-                                        @error('surname')
-                                        <span class="error invalid-feedback">{{ $message }}</span>
+                                        <input type="text" class="form-control @error("surname") is-invalid @enderror" name="surname" value="{{ old('surname') }}" placeholder="Nazwisko">
+                                        @error("surname")
+                                            <span class="error invalid-feedback">{{ $message }}</span>
                                         @enderror
                                     </div>
 
                                     <div class="input-group mb-3">
-                                        <input type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" placeholder="Adres e-mail">
-                                        @error('email')
-                                        <span class="error invalid-feedback">{{ $message }}</span>
+                                        <input type="email" class="form-control @error("email") is-invalid @enderror" name="email" value="{{ old("email") }}" placeholder="Adres e-mail">
+                                        @error("email")
+                                            <span class="error invalid-feedback">{{ $message }}</span>
                                         @enderror
                                     </div>
 
                                     <div class="input-group mb-3">
-                                        <input type="text" class="form-control @error('phone_number') is-invalid @enderror" name="phone_number" value="{{ old('phone_number') }}" placeholder="Numer telefonu" data-inputmask="'mask': ['+48 999 999 999', '+48 999 999 999']" data-mask>
-                                        @error('phone_number')
+                                        <input type="text" class="form-control @error("phone_number") is-invalid @enderror" name="phone_number" value="{{ old("phone_number") }}" placeholder="Numer telefonu" data-inputmask="'mask': ['+48 999 999 999', '+48 999 999 999']" data-mask>
+                                        @error("phone_number")
                                             <span class="error invalid-feedback">{{ $message }}</span>
                                         @enderror
                                     </div>
 
                                     <div class="form-group">
                                         <div class="input-group border-danger">
-                                            <select class="select2 @error('departments') is-invalid @enderror" multiple="multiple" name="departments[]" data-placeholder="Wybierz działy" style="width: 100%;">
+                                            <select class="select2 @error("departments") is-invalid @enderror" multiple="multiple" name="departments[]" data-placeholder="Wybierz działy" style="width: 100%;">
                                                 @foreach($departments as $department)
                                                     <option value="{{ $department->id }}">
                                                         {{ $department->name }}
@@ -53,9 +53,7 @@
                                                 @endforeach
                                             </select>
 
-
-
-                                            @error('departments')
+                                            @error("departments")
                                                 <span class="error invalid-feedback">{{ $message }}</span>
                                             @enderror
                                         </div>
@@ -64,24 +62,28 @@
                                     <div>
                                         <div class="input-group">
                                             <div class="custom-file">
-                                                <input type="file" name="image" class="custom-file-input @error('image') is-invalid @enderror" id="user_image" accept="image/png,image/jpeg" value="{{ old('image') }}">
+                                                <input type="file" name="image" class="custom-file-input @error("image") is-invalid @enderror" id="user_image" accept="image/png,image/jpeg" value="{{ old("image") }}">
                                                 <label class="custom-file-label" for="user_image">Wybierz obrazek</label>
                                             </div>
                                         </div>
-                                        @error('image')
-                                            <span class="error invalid-feedback @error('image') d-block @enderror">{{ $message }}</span>
+                                        @error("image")
+                                            <span class="error invalid-feedback @error("image") d-block @enderror">{{ $message }}</span>
                                         @enderror
                                     </div>
                                 </div>
                                 <div class="col-sm-12 col-md-12 col-lg-6">
                                     <h6>Opis pracownika</h6>
                                     <div class="input-group mb-3">
-                                        <textarea class="form-control employee-description @error('description') is-invalid @enderror" name="description" placeholder="Napisz coś..." rows="12">{{ old('description') }}</textarea>
-                                        @error('description')
-                                        <span class="error invalid-feedback">{{ $message }}</span>
+                                        <textarea class="form-control employee-description @error("description") is-invalid @enderror" name="description" placeholder="Napisz coś..." rows="12">{{ old("description") }}</textarea>
+                                        @error("description")
+                                            <span class="error invalid-feedback">{{ $message }}</span>
                                         @enderror
                                     </div>
                                 </div>
+                            </div>
+
+                            <div class="col-sm-12 col-md-10 col-lg-8 mx-auto text-center mb-2 mt-2">
+                                <h6><strong>Uwaga!</strong> Hasło zostanie wygenerowane automatycznie i przesłane na adres e-mail podany w formularzu wraz pozostałymi danymi logowania</h6>
                             </div>
 
                             <div class="mt-4">

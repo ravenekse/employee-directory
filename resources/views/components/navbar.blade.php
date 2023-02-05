@@ -1,7 +1,7 @@
 @php
     $user = auth()->user();
 
-    $avatar = $user->image_url ?: asset('assets/images/default_avatar.jpg')
+    $avatar = $user->image_url ?: asset("assets/images/default_avatar.jpg")
 @endphp
 
 <nav class="main-header navbar navbar-expand navbar-dark">
@@ -34,9 +34,9 @@
                     <div class="info">
                         <div class="d-block">{{ "{$user->firstname} {$user->surname}" }}</div>
                         <div class="small">
-                            @if($user->hasRole('user'))
+                            @if($user->hasRole("user"))
                                 Użytkownik
-                            @elseif($user->hasRole('admin'))
+                            @elseif($user->hasRole("admin"))
                                 Administrator
                             @endif
                         </div>

@@ -22,7 +22,7 @@ class Employees extends Controller
      */
     public function index(): View|Factory|Application
     {
-        $pageData["employees"] = $this->users->role("employee")->paginate(10);
+        $pageData["employees"] = $this->users->role("employee")->get();
 
         return view("pages.employees", $pageData);
     }

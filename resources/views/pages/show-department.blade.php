@@ -1,7 +1,7 @@
-@extends('layouts.acp-layout')
-@section('title', (str_starts_with($department->name, 'Dział') ? $department->name : "Dział {$department->name}"))
+@extends("layouts.acp-layout")
+@section("title", (str_starts_with($department->name, "Dział") ? $department->name : "Dział {$department->name}"))
 
-@section('acp_content')
+@section("acp_content")
     <div class="container-fluid">
         <div class="content-header d-flex align-items-center">
             <h4>Profil działu</h4>
@@ -42,7 +42,7 @@
                                 @foreach($department->users as $employee)
                                     <li>
                                         <a href="{{ route("employees.show-employee", ["employee_id" => $employee->id]) }}">
-                                            {{ $employee->firstname . " " . $employee->surname }}
+                                            {{ "{$employee->firstname} {$employee->surname}" }}
                                         </a>
                                     </li>
                                 @endforeach

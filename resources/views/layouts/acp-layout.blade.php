@@ -1,14 +1,14 @@
-@extends('layouts.layout')
+@extends("layouts.layout")
 
-@section('content')
-    @include('components.navbar')
-    @include('components.sidebar')
+@section("content")
+    @include("components.navbar")
+    @include("components.sidebar")
 
     <div class="content-wrapper">
         <section class="content">
-            @if(session('NOTIFICATION'))
+            @if(session("NOTIFICATION"))
                 @php
-                    $notification = (object) session('NOTIFICATION')
+                    $notification = (object) session("NOTIFICATION")
                 @endphp
                 <div class="alert alert-{{ $notification->type }} alert-dismissible fade show mt-2 mb-1" role="alert">
                     {{ $notification->message }}
@@ -21,4 +21,8 @@
             @yield('acp_content')
         </section>
     </div>
+
+    <footer class="main-footer text-center">
+        Copyright &copy; {{ date("Y") }} Adam Tyryłło
+    </footer>
 @endsection

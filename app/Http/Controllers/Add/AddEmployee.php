@@ -9,6 +9,7 @@ use App\Notifications\WelcomeNewEmployee;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Hash;
@@ -38,9 +39,11 @@ class AddEmployee extends Controller
     }
 
     /**
+     * @param Request $request
+     * @return RedirectResponse
      * @throws ValidationException
      */
-    public function form(Request $request)
+    public function form(Request $request): RedirectResponse
     {
         $validator = Validator::make($request->post(), [
             "firstname" => "required|string|max:255",
@@ -49,7 +52,6 @@ class AddEmployee extends Controller
             "phone_number" => "required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10",
             "description" => "string|nullable",
             "departments" => "required",
-            "image" => "image|mimes:png,jpg,jpeg",
         ]);
 
         if ($validator->fails()) {
@@ -61,10 +63,17 @@ class AddEmployee extends Controller
 
         $form = (object) $validator->validated();
 
+        if ($request->image && !in_array($request->image->getMimeType(), ["image/jpg", "image/jpeg", "image/png"])) {
+            return redirect()
+                ->back()
+                ->withErrors(["image" => "Obrazek musi być w formacie .jpg lub .png"])
+                ->withInput();
+        }
+
         $imageName =
-            Carbon::createFromTimestamp(now()->unix())->format("d-m-Y_H_i") .
-            "_" .
             Str::random() .
+            "_" .
+            Carbon::createFromTimestamp(now()->unix())->format("d_m_Y_H_i") .
             "." .
             $request->image->extension();
         $request->image->move(public_path("uploads/images"), $imageName);
@@ -96,7 +105,7 @@ class AddEmployee extends Controller
         return redirect()
             ->route("employees.show-employee", ["employee_id" => $user->id])
             ->with("NOTIFICATION", [
-                "type" => "info",
+                "type" => "success",
                 "message" => "Pomyślnie dodano pracownika {$user->firstname} {$user->surname}",
             ]);
     }

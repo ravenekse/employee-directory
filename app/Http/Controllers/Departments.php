@@ -28,12 +28,12 @@ class Departments extends Controller
                 ->user()
                 ->hasRole("admin")
         ) {
-            $pageData["departments"] = $this->departments->paginate(10);
+            $pageData["departments"] = $this->departments->get();
         } else {
             $pageData["departments"] = auth()
                 ->user()
                 ->departments()
-                ->paginate(10);
+                ->get();
         }
 
         return view("pages.departments", $pageData);

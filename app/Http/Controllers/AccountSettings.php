@@ -46,7 +46,6 @@ class AccountSettings extends Controller
             "email" => "required|email",
             "phone_number" => "required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10",
             "description" => "string|nullable",
-            "image" => "image|mimes:png,jpg,jpeg",
         ]);
 
         if ($validator->fails()) {
@@ -72,10 +71,16 @@ class AccountSettings extends Controller
                 ->withErrors(["email" => "Istnieje już konto z podanym adresem e-mail"]);
         }
 
+        if ($request->image && !in_array($request->image->getMimeType(), ["image/jpg", "image/jpeg", "image/png"])) {
+            return redirect()
+                ->back()
+                ->withErrors(["image" => "Obrazek musi być w formacie .jpg lub .png"]);
+        }
+
         $imageName =
-            Carbon::createFromTimestamp(now()->unix())->format("d-m-Y_H_i") .
-            "_" .
             Str::random() .
+            "_" .
+            Carbon::createFromTimestamp(now()->unix())->format("d_m_Y_H_i") .
             "." .
             $request->image->extension();
         $request->image->move(public_path("uploads/images"), $imageName);
@@ -86,7 +91,7 @@ class AccountSettings extends Controller
             ->back()
             ->with("NOTIFICATION", [
                 "type" => "success",
-                "message" => "Pomyślnie zaktualizowano szczegóły konta",
+                "message" => "Pomyślnie zaktualizowano ustawienia konta",
             ]);
     }
 

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Models\Users;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -14,13 +13,6 @@ use Illuminate\Validation\ValidationException;
 
 class LoginController extends Controller
 {
-    private Users $users;
-
-    public function __construct(Users $users)
-    {
-        $this->users = $users;
-    }
-
     /**
      * @return Application|Factory|View
      */
@@ -58,6 +50,13 @@ class LoginController extends Controller
                 ->onlyInput("email");
         }
 
-        return redirect()->route("departments");
+        $user = auth()->user();
+
+        return redirect()
+            ->route("departments")
+            ->with("NOTIFICATION", [
+                "type" => "success",
+                "message" => "Pomyślnie zalogowano!",
+            ]);
     }
 }

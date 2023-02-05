@@ -26,20 +26,15 @@ use Illuminate\Support\Facades\Route;
 
 Route::get("/", function () {
     return redirect()->route("auth.login.index");
-
-    //    $department = \App\Models\Departments::first();
-    //    foreach ($department->users as $user) {
-    //        echo "{$user->firstname} {$user->surname} <br>";
-    //    }
 });
 
 Route::prefix("auth")->group(function () {
     Route::prefix("login")
+        ->middleware("guest")
         ->group(function () {
             Route::get("/", [LoginController::class, "index"])->name("auth.login.index");
             Route::post("form", [LoginController::class, "form"])->name("auth.login.form");
-        })
-        ->middleware("guest");
+        });
 
     Route::get("logout", [LogoutController::class, "logout"])->name("auth.logout");
 });

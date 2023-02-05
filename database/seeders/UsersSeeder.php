@@ -25,18 +25,19 @@ class UsersSeeder extends Seeder
     {
         $admin = $this->users->create([
             "email" => "admin@example.com",
-            "password" => Hash::make("password1234"),
+            "password" => Hash::make("password"),
             "firstname" => "Adam",
             "surname" => "Nowak",
             "phone_number" => "+48123456789",
+            "description" => "Jestem Administratorem tego systemu :)",
         ]);
 
         $admin->assignRole("admin");
 
         $user1 = $this->users
             ->create([
-                "email" => "ravenekse@example.com",
-                "password" => Hash::make("password12"),
+                "email" => "zbigniew@example.com",
+                "password" => Hash::make("password"),
                 "firstname" => "Zbigniew",
                 "surname" => "Json",
                 "phone_number" => "+48123456789",
@@ -47,13 +48,13 @@ class UsersSeeder extends Seeder
 
         $user2 = $this->users
             ->create([
-                "email" => "demo@example.com",
-                "password" => Hash::make("password12"),
+                "email" => "jan@example.com",
+                "password" => Hash::make("password"),
                 "firstname" => "Jan",
                 "surname" => "Kowalski",
                 "phone_number" => "+48123456789",
                 "description" =>
-                    "Sprzedaż klocków hamulcowych to najprostsza rzecz na świecie. Ale każdy znajdzie coś dla siebie w naszej firmie",
+                    "Kontakt z klientem jest podstawą handlu. Ja mam dar przekonywania, dlatego pracuje na tym stanowisku.",
             ])
             ->assignRole("employee");
 
