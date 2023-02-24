@@ -8,7 +8,6 @@ RUN docker-php-ext-install \
         json \
         mbstring \
         pdo_mysql \
-        pdo_pgsql \
         tokenizer \
         xml
 
