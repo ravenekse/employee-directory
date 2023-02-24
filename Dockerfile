@@ -1,10 +1,31 @@
 FROM webdevops/php-nginx:8.2-alpine
-ENV WEB_DOCUMENT_ROOT=/app/public
-ENV PHP_DISMOD=bz2,calendar,exiif,ffi,intl,gettext,ldap,mysqli,imap,pdo_pgsql,pgsql,soap,sockets,sysvmsg,sysvsm,sysvshm,shmop,xsl,zip,gd,apcu,vips,yaml,imagick,mongodb,amqp
+
+RUN apk add oniguruma-dev postgresql-dev libxml2-dev
+RUN docker-php-ext-install \
+        bcmath \
+        ctype \
+        fileinfo \
+        json \
+        mbstring \
+        pdo_mysql \
+        pdo_pgsql \
+        tokenizer \
+        xml
+
+# Copy Composer binary from the Composer official Docker image
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+ENV WEB_DOCUMENT_ROOT /app/public
+ENV APP_ENV production
 WORKDIR /app
-COPY composer.json composer.lock
-RUN composer install --no-interaction --optimize-autoloader --no-dev
 COPY . .
-RUN php artisan optimize
-# Ensure all of our files are owned by the same user and group.
+
+RUN composer install --no-interaction --optimize-autoloader --no-dev
+# Optimizing Configuration loading
+RUN php artisan config:cache
+# Optimizing Route loading
+RUN php artisan route:cache
+# Optimizing View loading
+RUN php artisan view:cache
+
 RUN chown -R application:application .
