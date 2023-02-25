@@ -81,7 +81,7 @@ class AddEmployee extends Controller
             // $request->image->move(public_path("uploads/images"), $imageName);
 
             $file = $request->file('image');
-            Storage::disk('public')->put("uploads/images/${$imageName}", $file);
+            Storage::disk('public')->put("uploads/images/{$imageName}", $file);
         }
 
         $password = Str::random();
