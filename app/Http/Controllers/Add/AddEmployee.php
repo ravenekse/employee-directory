@@ -88,7 +88,7 @@ class AddEmployee extends Controller
             "firstname" => $form->firstname,
             "surname" => $form->surname,
             "phone_number" => trim($form->phone_number),
-            "image_url" => url("uploads/images/{$imageName}"),
+            "image_url" => $request->image ? url("uploads/images/{$imageName}") : null,
             "description" => $form->description,
         ]);
 
