@@ -70,13 +70,15 @@ class AddEmployee extends Controller
                 ->withInput();
         }
 
-        $imageName =
-            Str::random() .
-            "_" .
-            Carbon::createFromTimestamp(now()->unix())->format("d_m_Y_H_i") .
-            "." .
-            $request->image->extension();
-        $request->image->move(public_path("uploads/images"), $imageName);
+        if($request->image) {
+            $imageName =
+                Str::random() .
+                "_" .
+                Carbon::createFromTimestamp(now()->unix())->format("d_m_Y_H_i") .
+                "." .
+                $request->image->extension();
+            $request->image->move(public_path("uploads/images"), $imageName);
+        }
 
         $password = Str::random();
 
