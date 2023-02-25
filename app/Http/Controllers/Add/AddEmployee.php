@@ -13,6 +13,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
@@ -77,7 +78,10 @@ class AddEmployee extends Controller
                 Carbon::createFromTimestamp(now()->unix())->format("d_m_Y_H_i") .
                 "." .
                 $request->image->extension();
-            $request->image->move(public_path("uploads/images"), $imageName);
+            // $request->image->move(public_path("uploads/images"), $imageName);
+
+            $file = $request->file('image');
+            Storage::disk('public')->put("uploads/images/${$imageName}", $file);
         }
 
         $password = Str::random();
